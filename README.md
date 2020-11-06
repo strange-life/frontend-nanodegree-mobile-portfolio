@@ -30,11 +30,31 @@ $> ./ngrok http 8080
 
 Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
 
+#### 字体优化
+
+- 使用 `font-display:swap` 在字体加载完成前回退到默认字体
+- 使用 `rel="preload" as="style"` 预加载谷歌字体
+- 使用 `media="print" onload="this.media='all'"` 使字体不阻塞初次渲染
+
+#### CSS 优化
+
+- 使用 `media="print"` 使打印样式不阻塞初次渲染
+- 内联 CSS 个人认为应该只有骨架屏之类的场景可以用到
+
+#### 图片优化
+
+- 将原始图片压缩为 `webp` 格式
+- github pages 不支持手动设置缓存时间
+
 ### Part 2: Optimize Frames per Second in pizza.html
 
 To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js.
 
 You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
+
+#### JS 优化
+
+- `offsetWidth` 和 `scrollTop` 属性会强制浏览器清空当前的更新队列，从而无法合并多次更新来优化，因此除非必要都应该只读取一次缓存下来之后使用
 
 ## Optimization Tips and Tricks
 
