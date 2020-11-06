@@ -100,6 +100,7 @@ header p span {
 li img {
   float: left;
   padding-right: 1em;
+  width: 100px;
 }
 li p {
   font-size: 0.9em;
