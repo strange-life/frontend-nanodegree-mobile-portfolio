@@ -1266,8 +1266,7 @@ var resizePizzas = function (size) {
   changeSliderLabel(size);
 
   // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
-  function determineDx(elem, size) {
-    var oldWidth = elem.offsetWidth;
+  function determineDx(oldWidth, size) {
     var windowWidth = document.querySelector('#randomPizzas').offsetWidth;
     var oldSize = oldWidth / windowWidth;
 
@@ -1293,22 +1292,16 @@ var resizePizzas = function (size) {
 
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-    for (
-      var i = 0;
-      i < document.querySelectorAll('.randomPizzaContainer').length;
-      i++
-    ) {
-      var dx = determineDx(
-        document.querySelectorAll('.randomPizzaContainer')[i],
-        size,
-      );
-      var newwidth =
-        document.querySelectorAll('.randomPizzaContainer')[i].offsetWidth +
-        dx +
-        'px';
-      document.querySelectorAll('.randomPizzaContainer')[
-        i
-      ].style.width = newwidth;
+    // Only need to get pizzas once.
+    var pizzas = document.querySelectorAll('.randomPizzaContainer');
+
+    // To get new width we only need to get offsetWidth once.
+    var pizzaWidth = pizzas[0].offsetWidth;
+    var dx = determineDx(pizzaWidth, size);
+    var newwidth = pizzaWidth + dx + 'px';
+
+    for (var i = 0; i < pizzas.length; i++) {
+      pizzas[i].style.width = newwidth;
     }
   }
 
@@ -1378,11 +1371,12 @@ function updatePositions() {
   frame++;
   window.performance.mark('mark_start_frame');
 
+  // document.body.scrollTop is no longer supported in Chrome.
+  // Only need to get scrollTop once.
+  var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
   var items = document.querySelectorAll('.mover');
   for (var i = 0; i < items.length; i++) {
-    // document.body.scrollTop is no longer supported in Chrome.
-    var scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
     var phase = Math.sin(scrollTop / 1250 + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
