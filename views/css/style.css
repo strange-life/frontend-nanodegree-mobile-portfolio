@@ -8,7 +8,7 @@
 }
 
 body {
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-family: 'Trebuchet MS', Helvetica, sans-serif;
   background: black;
 }
 
@@ -41,11 +41,11 @@ form {
 }
 
 .randomPizzaContainer:after {
-  content: "";
+  content: '';
   display: table;
-  clear:both;
+  clear: both;
 }
 
- .container {
+.container {
   background-color: rgba(240, 60, 60, 0.8);
 }
